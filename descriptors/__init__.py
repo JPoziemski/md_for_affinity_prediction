@@ -18,7 +18,7 @@ class LigandStaticDescriptor:
             "StructuralDescriptor": StructuralDescriptor(self.ligand, None,
                                                          ["arom_rings", "aliphatic_rings", "rot_bonds", "single_bonds",
                                                           "double_bonds", "aromatic_bonds"]),
-            "AtomCountDescriptor": AtomCountDescriptor(self.ligand, None,["H", "C", "N", "O", "S", "P", "Metal", "Halogen"]),
+            "AtomCountDescriptor": AtomCountDescriptor(self.ligand, None,["H", "C", "N", "O", "S", "P", "Halogen"]),
             "ECFP4": ECFP(self.ligand)
         }
 
@@ -63,7 +63,7 @@ class FullLigandDescriptor:
 
 class FullPocketDescriptor:
     def __init__(self, universe, pocket, ligand_code, pocket_from_file=None):
-        #self.ligand = ligand
+        self.ligand = universe.select_atoms(f"resname {ligand_code} and not type H")
         self.universe = universe
         self.pocket = pocket
         pocket_5 = universe.select_atoms(f"around 5 resname {ligand_code}")
@@ -77,6 +77,7 @@ class FullPocketDescriptor:
             "ContactDescriptor": ContactDescriptor(self.universe, ligand_code, ["contact_pocket_all", "contact_ligand_pocket_all"]),
             "Shape": ShapeDescriptor(self.universe, self.pocket),
             "Shape_5": ShapeDescriptor(self.universe, pocket_5, suffix="_5"),
+            "ShapeLigand": ShapeDescriptor(self.universe, self.ligand, suffix="_ligand"),
             "ResidueTypeDescriptors": ResidueTypeDescriptors(self.universe, self.pocket),
         }
         if pocket_from_file:

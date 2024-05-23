@@ -11,8 +11,7 @@ from descriptors import FullLigandDescriptor, FullPocketDescriptor, InteractionD
 def compute_descriptors_for_complex(protein_path, ligand_path, name):
     universe, ligand_universe = create_universe_for_crystal_structure(protein_path, ligand_path)
     ligand_code = ligand_universe.residues.resnames[0]
-    #ligand_mol = MolFromMol2File(ligand_path, sanitize=True, removeHs=True, )
-    #print(ligand_mol)
+
     ligand_mol = ligand_universe.atoms.convert_to("RDKIT", NoImplicit=False, force=True)
     AddHs(ligand_mol)
 
@@ -27,8 +26,6 @@ def compute_descriptors_for_complex(protein_path, ligand_path, name):
     pocket_desc.calculate()
     pocket_data = pocket_desc.get_data()
 
-
-    #AddHs(ligand_mol)
     protein_mol = MolFromPDBFile(protein_path)
 
     interaction_desc = InteractionDescriptor(universe, ligand_mol, protein_mol)

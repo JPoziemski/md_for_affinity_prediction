@@ -7,10 +7,9 @@ from MDAnalysis.core.universe import Universe
 class Ligand3DPropertyDescriptor:
     def __init__(self, ligand, universe=None, descriptors=("asphericity", "eccentricity",
                                                            "pbf", "rog", "pmi1", "pmi2", "pmi3")):
-        print("adsasads")
         self.ligand = ligand
         self.universe = universe
-        print(type(ligand))
+
         self.descriptors = descriptors
         if isinstance(ligand, mda.core.groups.AtomGroup) and not self.universe:
             raise ValueError(f"if ligand is mda Atom Group you must provide universe")

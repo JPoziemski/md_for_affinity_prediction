@@ -6,7 +6,6 @@ class MotionDescriptor:
     def __init__(self, universe, ligand_code, descriptors=("RMSD_pocket", "RMSD_ligand", "RMSD_ca")):
         self.universe = universe
         self.ligand_code = ligand_code
-        print(f"around 3.5 resname {ligand_code}")
         self.pocket = universe.select_atoms(f"around 3.5 resname {ligand_code}").residues.atoms
         self.pocket = self.pocket.select_atoms(f"not type H")
         self.ligand = self.universe.select_atoms(f"resname {ligand_code} and not type H")
